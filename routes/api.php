@@ -24,3 +24,5 @@ Route::get('/turmas/{id}', [App\Http\Controllers\TurmasController::class, 'show'
 
 Route::post('/presenca', [App\Http\Controllers\PresencaController::class, 'store']);
 
+Route::post('/presenca/aluno', [App\Http\Controllers\PresencaController::class, 'cadastraPresença']);
+

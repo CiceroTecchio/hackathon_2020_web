@@ -3,11 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\ListaPresenca;
 use App\Models\Presenca;
 use Illuminate\Http\Request;
 
 class PresencaController extends Controller
 {
+
+    public function cadastraPresença(Request $request)
+    {   
+        ListaPresenca::where('cod_presenca',$request->cod_presenca)->where('cod_aluno',$request->cod_aluno)->delete();
+        $presenca = new ListaPresenca();
+        $presenca->cod_presenca = $request->cod_presenca;
+        $presenca->cod_aluno = $request->cod_aluno;
+        $presenca->fg_presente = $request->presente;
+        $presenca->save();
+
+        return response()->json(['response' => 'Presença Criada', 'ativo' => $presenca->fg_presente], 201);
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -43,7 +58,6 @@ class PresencaController extends Controller
         $presenca->save();
 
         return response()->json(['response' => 'Presença Criada', 'id' => $presenca->id], 201);
-
     }
 
     /**
