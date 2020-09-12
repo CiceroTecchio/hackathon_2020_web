@@ -11,58 +11,44 @@
                 </div>
             </div>
             @endif
-            <form class="ui form" action="{{ route('usuarios.store') }}" method="post">
+            <form class="ui form" action="{{ route('alunos.store') }}" method="post">
                 @csrf
-                <h4 class="ui dividing header">Cadastro de Usuário</h4>
+                <h4 class="ui dividing header">Cadastro de Aluno</h4>
                 <div class="field required">
                     <label>Nome</label>
-                    <input type="text" name="name" placeholder="Nome do Usuário">
+                    <input type="text" name="nome" placeholder="Nome do Aluno">
                 </div>
                 <div class="two fields">
                     <div class="field required">
                         <label>CPF</label>
-                        <input class="cpf" name="cpf" placeholder="CPF do Usuário" type="text">
+                        <input class="cpf" name="cpf" placeholder="CPF do Aluno" type="text">
                     </div>
                     <div class="field required">
                         <label>Telefone</label>
                         <input class="telefone" name="telefone" placeholder="Telefone" type="text">
                     </div>
                 </div>
-                <div class="field required">
-                    <label>E-Mail</label>
-                    <input type="text" name="email" placeholder="Endereço de E-Mail">
-                </div>
                 <div class="two fields">
-                    <div class="ten wide field required">
-                        <label>Senha</label>
-                        <input type="password" name="password" placeholder="Digite a senha para o usuário">
+                    <div class="field required">
+                        <label>E-Mail</label>
+                        <input type="text" name="email" placeholder="Endereço de E-Mail">
                     </div>
-                    <div class="seven wide field required">
-                        <label>Tipo de Usuário</label>
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="cod_tipo_usuario">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">Tipo de Usuário</div>
-                            <div class="menu">
-                                @foreach($tiposUsuario as $tipoUsuario)
-                                <div class="item" data-value="{{$tipoUsuario->id}}">{{$tipoUsuario->descricao}}</div>
-                                @endforeach
-                            </div>
-                        </div>
+                    <div class="field required">
+                        <label>RA</label>
+                        <input type="text" name="ra" placeholder="RA">
                     </div>
                 </div>
-
                 <div class="two fields mt-4">
                     <div class="field">
                         <div class="ui slider checkbox">
                             <input type="checkbox" name="fg_ativo" tabindex="0" class="hidden">
-                            <label>Usuário Ativo</label>
+                            <label>Aluno Ativo</label>
                         </div>
                     </div>
 
                 </div>
 
-                <button type="submit" class="ui button" tabindex="0">Submit Order</button>
+                <button type="submit" class="ui inverted green button" tabindex="0">Salvar</button>
             </form>
         </div>
     </div>
@@ -103,25 +89,6 @@
                     rules: [{
                         type: 'email',
                         prompt: 'Por Favor, Digite o E-Mail.'
-                    }]
-                },
-                password: {
-                    identifier: 'password',
-                    rules: [{
-                            type: 'empty',
-                            prompt: 'Por Favor, Digite a Senha.'
-                        },
-                        {
-                            type: 'minLength[6]',
-                            prompt: 'Your password must be at least {ruleValue} characters'
-                        }
-                    ]
-                },
-                cod_tipo_usuario: {
-                    identifier: 'cod_tipo_usuario',
-                    rules: [{
-                        type: 'empty',
-                        prompt: 'Por Favor, Escolha o tipo de usuário'
                     }]
                 }
             },

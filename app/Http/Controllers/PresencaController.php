@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\ListaPresenca;
 use App\Models\Presenca;
+use App\Models\Responsavel;
 use Illuminate\Http\Request;
+use Mail;
 
 class PresencaController extends Controller
 {
@@ -18,6 +20,21 @@ class PresencaController extends Controller
         $presenca->cod_aluno = $request->cod_aluno;
         $presenca->fg_presente = $request->presente;
         $presenca->save();
+
+        if($request->presente == false){
+            $responsaveis = Responsavel::where('cod_aluno', $request->cod_aluno)->join('users','cod_responsavel', 'users.id')->join('alunos', 'cod_aluno', 'alunos.id')
+            ->select('users.email','alunos.nome')->get();
+
+            foreach($responsaveis as $responsavel){
+                \Mail::send('/email',['nome' => $responsavel->nome], function ($message) use ($responsavel) {
+                    $message->from('vigiatech001@gmail.com', 'VigiaTech')
+                        ->to($responsavel->email)
+                        ->subject($responsavel->nome.' não esteve presente na chamada!');
+                });
+            }
+            
+        }
+        
 
         return response()->json(['response' => 'Presença Criada', 'ativo' => $presenca->fg_presente], 201);
     }

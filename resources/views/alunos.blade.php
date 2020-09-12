@@ -5,7 +5,7 @@
         <div class="col-lg-10">
             <h2 class="ui center aligned header">
                 <i class="users icon"></i>
-                Lista de Usuários
+                Lista de Alunos
             </h2>
             @if (session('success'))
             <div class="ui positive message">
@@ -15,7 +15,7 @@
                 </div>
             </div>
             @endif
-            <a href="{{ route('usuarios.create') }}" class="ui inverted green button">
+            <a href="{{ route('alunos.create') }}" class="ui inverted green button">
                 <i class="icon user plus"></i>
                 Adicionar
             </a>
@@ -25,18 +25,17 @@
                     <table class="ui sortable table unstackable celled" width="100%">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Nome</th>
                                 <th>E-Mail</th>
                                 <th>CPF</th>
                                 <th>Telefone</th>
-                                <th>Função</th>
+                                <th>RA</th>
                                 <th class="collapsing center aligned no-sort">Editar</th>
                                 <th class="collapsing center aligned no-sort">Ativar</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if(count($usuarios) < 1) <tr>
+                            @if(count($alunos) < 1) <tr>
                                 <td colspan="6">
                                     <h2 class="ui center aligned header">
                                         <i class="info icon"></i>
@@ -46,21 +45,20 @@
                                 </tr>
                                 @endif
 
-                                @foreach($usuarios as $usuario)
+                                @foreach($alunos as $usuario)
 
                                 <tr>
-                                    <td>{{$usuario->id}}</td>
-                                    <td>{{$usuario->name}}</td>
+                                    <td>{{$usuario->nome}}</td>
                                     <td>{{$usuario->email}}</td>
                                     <td>{{$usuario->cpf}}</td>
                                     <td>{{$usuario->telefone}}</td>
-                                    <td>{{$usuario->descricao}}</td>
+                                    <td>{{$usuario->ra}}</td>
                                     <td class="selectable center aligned">
-                                        <a href="{{route('usuarios.edit', $usuario->id)}}">
+                                        <a href="{{route('alunos.edit', $usuario->id)}}">
                                             <i class="inverted blue edit icon"></i>
                                         </a>
                                     </td>
-                                    <form id="formAtivar{{$usuario->id}}" action="{{route('usuarios.destroy', $usuario->id)}}" method="POST">
+                                    <form id="formAtivar{{$usuario->id}}" action="{{route('alunos.destroy', $usuario->id)}}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <td class="selectable center aligned">
@@ -77,17 +75,17 @@
                         </tbody>
 
                     </table>
-                    @if ($usuarios->lastPage() > 1)
+                    @if ($alunos->lastPage() > 1)
                     <div class="ui pagination menu">
-                        <a href="{{ $usuarios->previousPageUrl() }}" class="{{ ($usuarios->currentPage() == 1) ? ' disabled' : '' }} item">
+                        <a href="{{ $alunos->previousPageUrl() }}" class="{{ ($alunos->currentPage() == 1) ? ' disabled' : '' }} item">
                             Anterior
                         </a>
-                        @for ($i = 1; $i <= $usuarios->lastPage(); $i++)
-                            <a href="{{ $usuarios->url($i) }}" class="{{ ($usuarios->currentPage() == $i) ? ' active' : '' }} item">
+                        @for ($i = 1; $i <= $alunos->lastPage(); $i++)
+                            <a href="{{ $alunos->url($i) }}" class="{{ ($alunos->currentPage() == $i) ? ' active' : '' }} item">
                                 {{ $i }}
                             </a>
                             @endfor
-                            <a href="{{ $usuarios->nextPageUrl() }}" class="{{ ($usuarios->currentPage() == $usuarios->lastPage()) ? ' disabled' : '' }} item">
+                            <a href="{{ $alunos->nextPageUrl() }}" class="{{ ($alunos->currentPage() == $alunos->lastPage()) ? ' disabled' : '' }} item">
                                 Próximo
                             </a>
                     </div>

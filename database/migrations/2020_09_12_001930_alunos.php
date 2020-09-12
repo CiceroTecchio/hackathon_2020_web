@@ -21,6 +21,8 @@ class Alunos extends Migration
             $table->string('cpf');
             $table->string('telefone');
             $table->boolean('fg_ativo');
+            $table->bigInteger('cod_escola')->unsigned();
+            $table->foreign('cod_escola')->references('id')->on('escolas');
             $table->timestamps();
         });
     }

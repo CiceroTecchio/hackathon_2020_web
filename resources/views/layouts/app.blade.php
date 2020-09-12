@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/semantic.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/tableSort.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/jquery.mask.js') }}" type="text/javascript"></script>
@@ -44,6 +44,9 @@
                         @else
                         <li class="nav-item">
                             <a class="nav-link " href="{{ route('usuarios.index') }}"> Usuários</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{ route('alunos.index') }}"> Alunos</a>
                         </li>
                         @endguest
                     </ul>

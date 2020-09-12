@@ -22,3 +22,5 @@ Auth::routes(['register' => false]);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('/usuarios', App\Http\Controllers\UsuarioController::class);
+
+Route::resource('/alunos', App\Http\Controllers\AlunoController::class);
