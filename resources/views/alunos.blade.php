@@ -37,7 +37,7 @@
                         <tbody>
                             @if(count($alunos) < 1) <tr>
                                 <td colspan="6">
-                                    <h2 class="ui center aligned header">
+                                    <h2 class="ui center aligned header mt-2">
                                         <i class="info icon"></i>
                                         Nenhum usuário
                                     </h2>

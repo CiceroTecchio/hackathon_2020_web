@@ -55,11 +55,13 @@ Route::get('/busca/responsavel', function (Request $request) {
         $users = DB::table('users')
             ->where('name', 'like', '%' . $query . '%')
             ->where('cod_escola', Auth::user()->cod_escola)
+            ->where('cod_tipo_user', 3)
             ->select('users.id as value', 'users.name as name')
             ->get();
     } else {
         $users = DB::table('users')
             ->where('cod_escola', Auth::user()->cod_escola)
+            ->where('cod_tipo_user', 3)
             ->select('users.id as value', 'users.name as name')
             ->get();
     }

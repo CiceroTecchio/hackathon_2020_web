@@ -46,11 +46,13 @@
                             <label>Usuário Ativo</label>
                         </div>
                     </div>
-                    
+
                     <div class="field">
                         <label>Turma</label>
                         <select id="turma" name="cod_turma" class="ui search dropdown">
+                            @if($turma != null)
                             <option value="{{$turma->id}}" selected="true">{{$turma->descricao}}</option>
+                            @endif
                         </select>
                     </div>
 
