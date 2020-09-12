@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\TipoUsuario;
+use App\Models\AlunoTurmas;
+use App\Models\Turmas;
 use Illuminate\Http\Request;
-use App\Models\User;
-use Auth;
 
-class UsuarioController extends Controller
+class TurmasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,11 +16,9 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $usuarios = User::where('cod_escola', Auth::user()->cod_escola)
-        ->where('cod_tipo_user', '!=', 1)
-        ->paginate(10);
+        $turmas = Turmas::select('id', 'descricao')->where('cod_escola', 1)->where('fg_ativo', true)->get();
 
-        return view('usuarios', ['usuarios' => $usuarios]);
+        return response()->json(['response' => 'Sucesso', 'turmas' => $turmas], 200);
     }
 
     /**
@@ -31,9 +28,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        $tiposUsuario = TipoUsuario::where('id', '>', 1)->get();
-
-        return view ('create_usuario', ['tiposUsuario' => $tiposUsuario]);
+        //
     }
 
     /**
@@ -55,7 +50,13 @@ class UsuarioController extends Controller
      */
     public function show($id)
     {
-        //
+        $alunos = AlunoTurmas::join('alunos', 'cod_aluno', 'alunos.id')
+            ->select('alunos.id', 'alunos.nome')
+            ->where('alunos_turma.cod_turma', $id)
+            ->where('alunos_turma.fg_ativo', true)
+            ->get();
+
+            return response()->json(['response' => 'Sucesso', 'alunos' => $alunos], 200);
     }
 
     /**

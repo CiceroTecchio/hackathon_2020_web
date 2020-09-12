@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\TipoUsuario;
+use App\Models\Presenca;
 use Illuminate\Http\Request;
-use App\Models\User;
-use Auth;
 
-class UsuarioController extends Controller
+class PresencaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,11 +15,7 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $usuarios = User::where('cod_escola', Auth::user()->cod_escola)
-        ->where('cod_tipo_user', '!=', 1)
-        ->paginate(10);
-
-        return view('usuarios', ['usuarios' => $usuarios]);
+        //
     }
 
     /**
@@ -31,9 +25,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        $tiposUsuario = TipoUsuario::where('id', '>', 1)->get();
-
-        return view ('create_usuario', ['tiposUsuario' => $tiposUsuario]);
+        //
     }
 
     /**
@@ -44,7 +36,14 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $presenca = new Presenca();
+        $presenca->dia = date('Y-m-d');
+        $presenca->cod_turma = $request->cod_turma;
+        $presenca->cod_professor = 1;
+        $presenca->save();
+
+        return response()->json(['response' => 'Presença Criada', 'id' => $presenca->id], 201);
+
     }
 
     /**
