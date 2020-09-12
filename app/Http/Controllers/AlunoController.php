@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Aluno;
+use App\Models\AlunoTurmas;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -49,6 +50,16 @@ class AlunoController extends Controller
             $aluno->fg_ativo = false;
         }
         $aluno->save();
+
+        if($request->cod_turma != null){
+            $turma = new AlunoTurmas();
+            $turma->cod_turma = $request->cod_turma;
+            $turma->cod_aluno = $aluno->id;
+            $turma->cod_escola = Auth::user()->cod_escola;
+            $turma->fg_ativo = true;
+            $turma->save();
+        }
+
         return back()->with('success', 'Aluno cadastrado com sucesso!');
     }
 
@@ -72,8 +83,10 @@ class AlunoController extends Controller
     public function edit($id)
     {
         $aluno = Aluno::find($id);
-        
-        return view ('edit_aluno', ['aluno' => $aluno]);
+
+        $turma = AlunoTurmas::where('alunos_turma.cod_aluno', $id)->join('turmas', 'cod_turma', 'turmas.id')->select('turmas.descricao','turmas.id')->orderBy('alunos_turma.id', 'desc')->first();
+
+        return view ('edit_aluno', ['aluno' => $aluno, 'turma' => $turma]);
     }
 
     /**
@@ -94,6 +107,18 @@ class AlunoController extends Controller
             $aluno->fg_ativo = false;
         }
         $aluno->save();
+
+        AlunoTurmas::where('cod_aluno', $aluno->id)
+        ->update(['fg_ativo' => false]);
+
+        if($request->cod_turma != null){
+            $turma = new AlunoTurmas();
+            $turma->cod_turma = $request->cod_turma;
+            $turma->cod_aluno = $aluno->id;
+            $turma->cod_escola = Auth::user()->cod_escola;
+            $turma->fg_ativo = true;
+            $turma->save();
+        }
         return back()->with('success', 'Aluno editado com sucesso!');
     }
 

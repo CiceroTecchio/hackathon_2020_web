@@ -14,7 +14,7 @@
             <form class="ui form" action="{{ route('alunos.update', $aluno->id) }}" method="post">
                 @csrf
                 @method('PATCH')
-                <h4 class="ui dividing header">Cadastro de Usuário</h4>
+                <h4 class="ui dividing header">Editar Aluno - {{$aluno->nome}} </h4>
                 <div class="field required">
                     <label>Nome</label>
                     <input type="text" name="nome" value="{{$aluno->nome}}" placeholder="Nome do Usuário">
@@ -39,12 +39,19 @@
                         <input type="text" name="ra" value="{{$aluno->ra}}" placeholder="RA">
                     </div>
                 </div>
-                <div class="two fields mt-4">
-                    <div class="field">
+                <div class="two fields">
+                    <div class="field mt-4">
                         <div class="ui slider checkbox @if($aluno->fg_ativo == true) checked @endif">
                             <input type="checkbox" name="fg_ativo" @if($aluno->fg_ativo == true) checked="checked" @endif tabindex="0" class="hidden">
                             <label>Usuário Ativo</label>
                         </div>
+                    </div>
+                    
+                    <div class="field">
+                        <label>Turma</label>
+                        <select id="turma" name="cod_turma" class="ui search dropdown">
+                            <option value="{{$turma->id}}" selected="true">{{$turma->descricao}}</option>
+                        </select>
                     </div>
 
                 </div>
@@ -59,7 +66,24 @@
     $('.telefone').mask('(00) 0000-00009');
     $('.cpf').mask('000.000.000-00');
     $('.ui.checkbox').checkbox();
-    $('.ui.dropdown').dropdown();
+    $('#turma').dropdown({
+        placeholder: 'Selecione uma turma',
+        apiSettings: {
+            minCharacters: 0,
+            cache: false,
+            url: '/busca/turmas?query={query}',
+            beforeSend: function(settings) {
+                $('#turma').dropdown('setup menu', {
+                    values: null
+                });
+                return settings;
+            }
+        },
+        ignoreCase: true,
+        message: {
+            noResults: 'Nenhum resultado encontrado.'
+        }
+    });
 
     $('.ui.form')
         .form({

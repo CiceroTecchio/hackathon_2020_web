@@ -14,7 +14,7 @@
             <form class="ui form" action="{{ route('usuarios.update', $usuario->id) }}" method="post">
                 @csrf
                 @method('PATCH')
-                <h4 class="ui dividing header">Cadastro de Usuário</h4>
+                <h4 class="ui dividing header">Editar Usuário - {{$usuario->name}}</h4>
                 <div class="field required">
                     <label>Nome</label>
                     <input type="text" name="name" value="{{$usuario->name}}" placeholder="Nome do Usuário">
