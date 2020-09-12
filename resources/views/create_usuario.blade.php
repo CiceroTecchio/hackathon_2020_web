@@ -62,7 +62,7 @@
 
                 </div>
 
-                <button type="submit" class="ui button" tabindex="0">Submit Order</button>
+                <button type="submit" class="ui inverted green button" tabindex="0">Salvar</button>
             </form>
         </div>
     </div>
