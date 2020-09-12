@@ -19,6 +19,7 @@ class AlunosTurma extends Migration
             $table->foreign('cod_turma')->references('id')->on('turmas');
             $table->bigInteger('cod_aluno')->unsigned();
             $table->foreign('cod_aluno')->references('id')->on('alunos');
+            $table->boolean('fg_ativo');
             $table->timestamps();
         });
     }

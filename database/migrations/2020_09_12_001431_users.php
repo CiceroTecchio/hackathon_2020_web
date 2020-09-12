@@ -21,10 +21,12 @@ class Users extends Migration
             $table->string('password');
             $table->string('cpf');
             $table->string('telefone');
-            $table->string('api_token', 80)->unique()->nullable()->default(null);
+            $table->string('api_token', 80)->nullable()->default(null);
             $table->bigInteger('cod_tipo_user')->unsigned();
             $table->foreign('cod_tipo_user')->references('id')->on('tipos_user');
             $table->boolean('fg_ativo');
+            $table->bigInteger('cod_escola')->unsigned();
+            $table->foreign('cod_escola')->references('id')->on('escolas');
             $table->rememberToken();
             $table->timestamps();
         });
